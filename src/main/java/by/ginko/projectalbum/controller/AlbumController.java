@@ -71,4 +71,72 @@ public class AlbumController {
         modelAndView.setViewName("addalbum");
         return modelAndView;
     }
+
+    @RequestMapping(value = {"/deletealbum"}, method = RequestMethod.GET)
+    public ModelAndView showDeletePersonPage(Model model) {
+        ModelAndView modelAndView = new ModelAndView("deletealbum");
+        AlbumForm albumForm = new AlbumForm();
+        model.addAttribute("albumformdelete", albumForm);
+        return modelAndView;
+    }
+    @RequestMapping(value = {"/deletealbum"}, method = RequestMethod.POST)
+    public ModelAndView deletePerson(Model model, //
+                                   @ModelAttribute("albumformdelete") AlbumForm albumForm) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("albumlist");
+        String title = albumForm.getTitle();
+        String author = albumForm.getAuthor();
+        if (title != null && title.length() > 0 //
+                && author != null && author.length() > 0) {
+            Album del = null;
+            for (var album : albums)
+            {
+                String tt = album.getTitle();
+                String au = album.getAuthor();
+                if(tt.equals(title))
+                    if(au.equals(author))
+                        del = album;
+            }
+            if(del != null){
+                albums.remove(del);
+            }
+            model.addAttribute("albums",albums);
+            return modelAndView;
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        modelAndView.setViewName("deletealbum");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/redactalbum"}, method = RequestMethod.GET)
+    public ModelAndView showRedactPersonPage(Model model) {
+        ModelAndView modelAndView = new ModelAndView("redactalbum");
+        AlbumForm albumForm = new AlbumForm();
+        model.addAttribute("albumformredact", albumForm);
+        return modelAndView;
+    }
+    @RequestMapping(value = {"/redactalbum"}, method = RequestMethod.POST)
+    public ModelAndView redactPerson(Model model, //
+                                     @ModelAttribute("albumformredact") AlbumForm albumForm) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("albumlist");
+        String title = albumForm.getTitle();
+        String newAuthor = albumForm.getAuthor();
+        if (title != null && title.length() > 0 //
+                && newAuthor != null && newAuthor.length() > 0) {
+            Album del = null;
+            for (var album : albums)
+            {
+                String tt = album.getTitle();
+                String au = album.getAuthor();
+                if(tt.equals(title))
+                    album.setAuthor(newAuthor);
+            }
+            model.addAttribute("albums",albums);
+            return modelAndView;
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        modelAndView.setViewName("redactalbum");
+        return modelAndView;
+    }
 }
