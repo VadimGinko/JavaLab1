@@ -3,17 +3,17 @@ package by.ginko.projectalbum.controller;
 
 import by.ginko.projectalbum.forms.AlbumForm;
 import by.ginko.projectalbum.model.Album;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class AlbumController {
     private static List<Album> albums = new ArrayList<Album>();
@@ -27,39 +27,43 @@ public class AlbumController {
     private String message;
     @Value("${error.message}")
     private String errorMessage;
+
+    //@GetMapping(value = {"/", "index"})
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         model.addAttribute("message", message);
+        log.info("/index was called(GET)");
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/allalbums"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/allalbums"})
     public ModelAndView personList(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("albumlist");
         model.addAttribute("albums", albums);
+        log.info("/allalbums was called(GET)");
         return modelAndView;
     }
 
-
-    @RequestMapping(value = {"/addalbum"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/addalbum"})
     public ModelAndView showAddPersonPage(Model model) {
         ModelAndView modelAndView = new ModelAndView("addalbum");
         AlbumForm albumForm = new AlbumForm();
         model.addAttribute("albumform", albumForm);
+        log.info("/addalbum was called(GET)");
         return modelAndView;
     }
-    // @PostMapping("/addalbum")
-    //GetMapping("/")
-    @RequestMapping(value = {"/addalbum"}, method = RequestMethod.POST)
+
+    @PostMapping(value = {"/addalbum"})
     public ModelAndView savePerson(Model model, //
                                    @ModelAttribute("albumform") AlbumForm albumForm) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("albumlist");
         String title = albumForm.getTitle();
         String author = albumForm.getAuthor();
+        log.info("/addalbum was called(POST)");
         if (title != null && title.length() > 0 //
                 && author != null && author.length() > 0) {
             Album newAlbum = new Album(title, author);
@@ -72,20 +76,23 @@ public class AlbumController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/deletealbum"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/deletealbum"})
     public ModelAndView showDeletePersonPage(Model model) {
         ModelAndView modelAndView = new ModelAndView("deletealbum");
         AlbumForm albumForm = new AlbumForm();
         model.addAttribute("albumformdelete", albumForm);
+        log.info("/deletealbum was called(GET)");
         return modelAndView;
     }
-    @RequestMapping(value = {"/deletealbum"}, method = RequestMethod.POST)
+
+    @PostMapping(value = {"/deletealbum"})
     public ModelAndView deletePerson(Model model, //
                                    @ModelAttribute("albumformdelete") AlbumForm albumForm) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("albumlist");
         String title = albumForm.getTitle();
         String author = albumForm.getAuthor();
+        log.info("/deletealbum was called(POST)");
         if (title != null && title.length() > 0 //
                 && author != null && author.length() > 0) {
             Album del = null;
@@ -107,21 +114,23 @@ public class AlbumController {
         modelAndView.setViewName("deletealbum");
         return modelAndView;
     }
-
-    @RequestMapping(value = {"/redactalbum"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/redactalbum"})
     public ModelAndView showRedactPersonPage(Model model) {
         ModelAndView modelAndView = new ModelAndView("redactalbum");
         AlbumForm albumForm = new AlbumForm();
         model.addAttribute("albumformredact", albumForm);
+        log.info("/redactalbum was called(GET)");
         return modelAndView;
     }
-    @RequestMapping(value = {"/redactalbum"}, method = RequestMethod.POST)
+
+    @PostMapping(value = {"/redactalbum"})
     public ModelAndView redactPerson(Model model, //
                                      @ModelAttribute("albumformredact") AlbumForm albumForm) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("albumlist");
         String title = albumForm.getTitle();
         String newAuthor = albumForm.getAuthor();
+        log.info("/redactalbum was called(POST)");
         if (title != null && title.length() > 0 //
                 && newAuthor != null && newAuthor.length() > 0) {
             Album del = null;

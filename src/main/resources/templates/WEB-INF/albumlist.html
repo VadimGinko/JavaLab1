@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Album List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{classpath:/static/css/style.css}"/>
+</head>
+<style>
+    body, input, button{
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 300;
+        line-height: 1.42em;
+        color:#A7A1AE;
+        background-color: #1F2739;
+    }
+
+    h1{
+        font-size: 3em;
+        font-weight: 300;
+        line-height: 1em;
+        text-align: center;
+        color: #4DC3FA;
+    }
+
+    h2{
+        font-size: 1em;
+        font-weight: 300;
+        text-align: center;
+        display: block;
+        line-height: 1em;
+        padding-bottom: 2em;
+        color: #FB667A;
+    }
+
+    h2 a{
+        font-width: 700;
+        text-transform: uppercase;
+        color: #FB667A;
+        text-decoration: none;
+    }
+</style>
+<body>
+<h1>Album List</h1>
+<h2> <a href="addalbum">Add new album</a> </h2>
+<h2> <a href="deletealbum">Delete album</a> </h2>
+<h2> <a href="redactalbum">Edit album</a> </h2>
+<br/><br/>
+<div class="container">
+    <table class ="container" border="1">
+        <tr>
+            <th><h1>Title</h1></th>
+            <th><h1>Author</h1></th>
+        </tr>
+        <tr th:each ="album : ${albums}">
+            <td th:utext="${album.title}">...</td>
+            <td th:utext="${album.author}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
+    <style>
+        body, input, button{
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.42em;
+            color:#A7A1AE;
+            background-color: #1F2739;
+        }
+
+        h1{
+            font-size: 3em;
+            font-weight: 300;
+            line-height: 1em;
+            text-align: center;
+            color: #4DC3FA;
+        }
+
+        h2{
+            font-size: 1em;
+            font-weight: 300;
+            text-align: center;
+            display: block;
+            line-height: 1em;
+            padding-bottom: 2em;
+            color: #FB667A;
+        }
+
+        h2 a{
+            font-width: 700;
+            text-transform: uppercase;
+            color: #FB667A;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<h1 th:utext="${message}">..!..</h1>
+<h2>
+    <a th:href="@{/allalbums}">Get albums list</a>
+</h2>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
